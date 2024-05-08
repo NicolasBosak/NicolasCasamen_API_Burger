@@ -1,4 +1,10 @@
+﻿using API_Burger.NicolasCasamen.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using API_Burger.NicolasCasamen.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<API_BurgerNicolasCasamenContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("API_BurgerNicolasCasamenContext") ?? throw new InvalidOperationException("Connection string 'API_BurgerNicolasCasamenContext' not found.")));
 
 // Add services to the container.
 
@@ -21,5 +27,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapBurgerEndpoints();
 
 app.Run();
